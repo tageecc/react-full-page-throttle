@@ -5,6 +5,7 @@ import isMobileDevice from '../utils/is-mobile';
 import { getObjectValues } from '../utils/helpers';
 import Slide from './Slide';
 import Controls from './Controls';
+import throttle from 'lodash.throttle';
 
 const scrollMode = {
   FULL_PAGE: 'full-page',
@@ -99,7 +100,7 @@ export default class FullPage extends React.Component {
     this._isScrolledAlready = false;
   }
 
-  onTouchMove = (evt) => {
+  onTouchMove = throttle((evt) => {
     if (this.props.scrollMode !== scrollMode.FULL_PAGE) {
       return;
     }
@@ -114,7 +115,7 @@ export default class FullPage extends React.Component {
         this.scrollToSlide(this.state.activeSlide - 1);
       }
     }
-  }
+  }, 500);
 
   onScroll = (evt) => {
     if (this.props.scrollMode !== scrollMode.FULL_PAGE) {
